@@ -7,22 +7,38 @@ namespace Processor
 	{
 		public static void Main(string[] args)
 		{
-			var serialiser = new MessageSerializer();
+			var serialiser = new MessageSerializer
+			{
+				IncludeDiagnostics = true
+			};
+
 			var buffer = new MemoryStream();
 
 			var messageList = new List<IMessage>
 			{
+				new NoOperation{ },
 				new MyMessage { Id = 123, Name = "Test" },
-				new AnotherMessage { Id = 222, Name = "thg", Value = 321 }
+				new MyMessage { Id = 0, Name = "!" },
+				new AnotherMessage { Id = 222, Name = "thg", Value = 321 },
+				new VegetableMessage { Id = 12345, Value = 32767},
+				new VulcanMessage { Activated = true , BigValue = 12394785},
+				new VulcanMessage { Activated = false , BigValue = 8}
 			};
 
+			Console.WriteLine($"Sending");
+			Console.WriteLine($"=======");
 			foreach (var message in messageList)
 			{
 				byte[] serialized = serialiser.Serialise(message);
 				buffer.Write(serialized, 0, serialized.Length);
 			}
 
+			Console.WriteLine();
 			buffer.Position = 0;
+
+			Console.WriteLine($"Reading");
+			Console.WriteLine($"=======");
+			Console.WriteLine($"[Length + Type + Payload]");
 
 			ReadData(buffer, serialiser);
 
@@ -38,8 +54,8 @@ namespace Processor
 			var handler = new LengthPrefixedMessageHandler(serialiser);
 			handler.MessageReceived += (sender, e) =>
 			{
-
-				Console.WriteLine($"Received message of type {e.MessageType} {e.Message.Descriptor.ClrType}: {e.Message}");
+				Console.WriteLine($"{e.MessageType}");
+				Console.WriteLine($"{e.Message.Descriptor.ClrType}: {e.Message}");
 			};
 
 			//var listener = new TcpListener(IPAddress.Any, 5000);

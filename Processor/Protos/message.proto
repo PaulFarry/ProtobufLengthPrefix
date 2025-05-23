@@ -1,5 +1,9 @@
 syntax = "proto3";
 
+message NoOperation
+{
+
+}
 
 message MyMessage {
     int32 id = 1;
@@ -15,4 +19,11 @@ message AnotherMessage {
 message VegetableMessage {
     int32 id = 1;
     int32 value =3;
+}
+
+message VulcanMessage{
+    int64 bigValue = 1;
+    bool activated = 2;
+
+    reserved 3,4,5;
 }
