@@ -1,5 +1,6 @@
 ﻿using Google.Protobuf;
 using Processor.Handler;
+using Processor.Protobuf.MessageTypes;
 
 namespace Processor
 {
@@ -21,8 +22,8 @@ namespace Processor
 				new MyMessage { Id = 0, Name = "!" },
 				new AnotherMessage { Id = 222, Name = "thg", Value = 321 },
 				new VegetableMessage { Id = 12345, Value = 32767},
-				new VulcanMessage { Activated = true , BigValue = 12394785},
-				new VulcanMessage { Activated = false , BigValue = 8}
+				new VulcanMessage { Activated = true , Value = 12394785},
+				new VulcanMessage { Activated = false , Value = 8}
 			};
 
 			Console.WriteLine($"Sending");

@@ -1,5 +1,6 @@
 ﻿using Google.Protobuf;
 using Google.Protobuf.Reflection;
+using Processor.Protobuf.MessageTypes;
 
 namespace Processor.Handler
 {
